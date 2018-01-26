@@ -1,6 +1,6 @@
 # CQ-updateFile
-使用GitHub上传文件
---------------------------------------------
+
+----------------使用GitHub上传文件----------------------------
 #1-下载并安装git 
 下载官网 https://git-scm.com/
 
@@ -49,3 +49,29 @@ git push -u origin gh-pages （push文件到仓库中）
 
 ######慕课网学习#############
 https://www.imooc.com/learn/390
+
+
+
+---------------------------------Vue 项目进行npm run build后------------------------------
+====1.打包vue项目====
+在根目录下输入命令 $ npm run build  ---实际上此命令就是执行build.js文件，将项目打包成静态资源---
+根目录下生成dist文件夹，dist文件夹包含index.html和static文件夹
+此时打开index.html无法加载
+====解决办法====
+打开项目根目录　config　下的　index.js　文件，进行如下修改：
+modules.exports = {
+  build: {
+    assetsPublicPath: './'
+  }
+重新 npm run build下 css/js可以加载，但是 字体图表和mock的数据无法加载
+====解决办法====
+if (options.extract) {
+  return ExtractTextPlugin.extract({
+    use: loaders,
+    fallback: 'vue-style-loader',
+    publicPath: '../../' （<----添加这一属性）
+  })
+}
+重新'npm run build',打开dist目录下的index.js可以看到字体图标正常显示了。
+这样修改原因参考 https://github.com/vuejs-templates/webpack/issues/166
+}
